@@ -7,9 +7,13 @@ class App extends React.Component {
   }; //변하는 data 넣기위해 , functoion component 대신 state가 작동되는 class component 사용
 
   getMovies = async () => {
-    const movies = await axios.get(
+    const {
+      data: {
+        data: { movies },
+      }, // (es6)
+    } = await axios.get(
       "https://yts-proxy.nomadcoders1.now.sh/list_movies.json"
-    );
+    ); // axios를 이용해 fetch(가져오기)를 하는 과정 , 이때 axios는 느리기때문에 async - await 사용
   };
 
   componentDidMount() {
@@ -17,10 +21,14 @@ class App extends React.Component {
   }
 
   render() {
-    const { isLoading } = this.state; // class component 이기에 this.state 사용
-    // state의 사명을 이루어 주고자, 윗 줄과 같은 과정을 통해 state의 key를 바꿔줌
-    return <div> {isLoading ? "Loading ..." : "we are ready"}</div>;
+    const { isLoading } = this.state;
+    // this.state : 현재 state 안에 있는 isLoading 을 재 정의시켜준것 (render 에서 쓰기위함)
+    // isLoading 은 어떤 객체 내 (state = {} )에 있는 key 이다. 그 어떤 객체는 this.state !
+    return <div>{isLoading ? "Loading..." : "We are ready"}</div>;
+    //this.state.isLoading 을 바꾼것 ! (es6)
   }
 }
+
+//state 형성 -> isLoading 변환(중간에 getMovies 실행)
 
 export default App;
