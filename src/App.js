@@ -60,5 +60,3 @@ class App extends React.Component {
 //state 형성 -> isLoading 변환(중간에 getMovies 실행)
 
 export default App;
-
-//map ? props?
